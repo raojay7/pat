@@ -12,7 +12,7 @@ using namespace std;
  */
 
 
-int main() {
+int main1() {
     string name,birth,maxbirth="1814/09/06",minbirth="2014/09/06",minname,maxname;
     int cnt=0,n;
     cin>>n;
