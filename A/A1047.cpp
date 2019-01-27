@@ -10,6 +10,7 @@ using namespace std;
  name[i][j]的i下标
  注意：strcmp返回的不一定是-1，0，1这几个数字，
  要返回bool变量还需要在后面添加strcmp是大于0还是小于0
+ 如果对字符串排序会比较耗时，可以通过对下标进行排序来减少时间
  */
 
 char name[40001][5];
