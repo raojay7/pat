@@ -29,6 +29,9 @@ void bfs(){
         }
     }
 }
+
+
+
 int main() {
     int n,m,k,node,c;
     scanf("%d %d",&n,&m);
