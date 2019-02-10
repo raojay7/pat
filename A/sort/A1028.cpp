@@ -12,6 +12,7 @@ using namespace std;
  比较ACSII码的大小，strcmp(‘a’, ‘z’)返回负值，因为a<z a – z < 0
  按照分数的不降序排序，a.score <= b.score
  */
+
 const int maxn=100001;
 struct NODE {
     int no,score;
