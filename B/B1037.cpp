@@ -23,6 +23,7 @@ int main() {
 //    n=t>c?n:n-1;
 //    y=n>b?n-b:n-b+17;
 //    x=n>b?m-a:m-a-1;
+ 
     printf("%d.%d.%d", x, y, z);
     return 0;
 }
