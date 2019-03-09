@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+//#define mem(a,b) memset(a,b,sizeof(a))
+//#define mod 1000000007
+using namespace std;
+typedef long long ll;
+const int maxn = 1e4 + 5;
+
+bool visited[510];
+int e[510][510];
+int n,m,k;
+void dfs(int x){
+    visited[x]=true;
+    for (int i = 0; i < n; ++i) {
+        if (!visited[i]&&e[x][i]==1){
+            dfs(i);
+        }
+    }
+}
+int countcnt(){
+    int cnt=0;
+    fill(visited,visited+510,false);
+    for (int i = 0; i < n; ++i) {
+        if(!visited[i]){
+            dfs(i);
+            cnt++;
+        }
+    }
+    return cnt;
+}
+//判断联通性，如果改变之后的tempcnt>cnt+1说明联通性改变，否则没改变，如果到达了n-1说明游戏结束
+
+
+int main() {
+
+    cin>>n>>m;
+    int a,b;
+    for (int i = 0; i < m; ++i) {
+        cin>>a>>b;
+        e[a][b]=e[b][a]=1;
+    }
+    int cnt=countcnt();
+
+    //执行操作
+    cin>>k;
+    int city;
+    for (int i = 0; i < k; ++i) {
+        cin>>city;
+        for (int j = 0; j < n; ++j) {
+            e[city][j]=e[j][city]=-1;//设置为不可达
+        }
+        int tempcnt=countcnt();
+        if (tempcnt>cnt+1){
+            cout<<"Red Alert: City "<<city<<" is lost!"<<endl;
+        }
+        else{
+            cout<<"City "<<city<<" is lost."<<endl;
+        }
+        cnt=tempcnt;
+        if (i==n-1)cout<<"Game Over."<<endl;
+    }
+    return 0;
+}
