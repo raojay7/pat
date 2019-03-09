@@ -1,0 +1,132 @@
+#include<bits/stdc++.h>
+//#define mem(a,b) memset(a,b,sizeof(a))
+//#define mod 1000000007
+using namespace std;
+typedef long long ll;
+const int maxn = 1e4 + 5;
+/*
+7 5 4
+1 2
+2 3
+3 1
+4 5
+5 6
+1 4 5 7
+ */
+
+
+//使用bfs遍历每个图，使用vector<int> v[]的push来构造图，然后有一个visited数组，用于
+//判断是否访问过，如果不设置，就会出现循环访问的情况，同时，使用结构体记录当前的序号以及层次
+//如果层次比最大的还大，就更新，相同更新最小的序号
+vector<vector<int>> v(10010);
+int book[10010];
+struct Node{
+    int layer,value;
+};
+int main() {
+    int n,m,k,a,b;
+    cin>>n>>m>>k;
+    for (int i = 0; i < m; ++i) {
+        cin>>a>>b;
+        v[a].push_back(b);
+        v[b].push_back(a);
+    }
+
+    for (int i = 0; i < k; ++i) {
+        cin>>a;
+        queue<Node> q;
+        fill(book,book+10010,0);
+        int maxlayer=-1;
+
+        q.push({0,a});
+        int ans=10010;
+        book[a]=1;
+        while(!q.empty()){
+            Node node=q.front();
+            q.pop();
+            if (maxlayer<node.layer){
+                maxlayer=node.layer;
+                ans=10010;
+            }
+            if (node.value!=a){
+                ans=min(ans,node.value);
+            }//一直选同层最小的序号
+            int size=v[node.value].size();
+            for (int j = 0; j < size; ++j) {
+                if(book[v[node.value][j]]==0){
+                    q.push({node.layer+1,v[node.value][j]});
+                    book[v[node.value][j]]=1;
+                }
+            }
+        }
+        if(ans != 10010) printf("%d\n", ans);
+        else printf("0\n");
+    }
+    return 0;
+}
+#include<bits/stdc++.h>
+//#define mem(a,b) memset(a,b,sizeof(a))
+//#define mod 1000000007
+using namespace std;
+typedef long long ll;
+const int maxn = 1e4 + 5;
+/*
+7 5 4
+1 2
+2 3
+3 1
+4 5
+5 6
+1 4 5 7
+ */
+
+
+//使用bfs遍历每个图，使用vector<int> v[]的push来构造图，然后有一个visited数组，用于
+//判断是否访问过，如果不设置，就会出现循环访问的情况，同时，使用结构体记录当前的序号以及层次
+//如果层次比最大的还大，就更新，相同更新最小的序号
+vector<vector<int>> v(10010);
+int book[10010];
+struct Node{
+    int layer,value;
+};
+int main() {
+    int n,m,k,a,b;
+    cin>>n>>m>>k;
+    for (int i = 0; i < m; ++i) {
+        cin>>a>>b;
+        v[a].push_back(b);
+        v[b].push_back(a);
+    }
+
+    for (int i = 0; i < k; ++i) {
+        cin>>a;
+        queue<Node> q;
+        fill(book,book+10010,0);
+        int maxlayer=-1;
+
+        q.push({0,a});
+        int ans=10010;
+        book[a]=1;
+        while(!q.empty()){
+            Node node=q.front();
+            q.pop();
+            if (maxlayer<node.layer){
+                maxlayer=node.layer;
+                ans=10010;
+            }
+            if (node.value!=a){
+                ans=min(ans,node.value);
+            }//一直选同层最小的序号
+            int size=v[node.value].size();
+            for (int j = 0; j < size; ++j) {
+                if(book[v[node.value][j]]==0){
+                    q.push({node.layer+1,v[node.value][j]});
+                    book[v[node.value][j]]=1;
+                }
+            }
+        }
+        if(ans != 10010) printf("%d\n", ans);
+        else printf("0\n");
+    }
+    return 0;
+}
