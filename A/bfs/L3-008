@@ -4,17 +4,6 @@
 using namespace std;
 typedef long long ll;
 const int maxn = 1e4 + 5;
-/*
-7 5 4
-1 2
-2 3
-3 1
-4 5
-5 6
-1 4 5 7
- */
-
-
 //使用bfs遍历每个图，使用vector<int> v[]的push来构造图，然后有一个visited数组，用于
 //判断是否访问过，如果不设置，就会出现循环访问的情况，同时，使用结构体记录当前的序号以及层次
 //如果层次比最大的还大，就更新，相同更新最小的序号
