@@ -53,7 +53,6 @@ public class Main {
         int ret = c - 48;
         return ret < 10 ? ret : ret - 39;
     }
-
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String[] split = reader.readLine().split(" ");
