@@ -1,0 +1,28 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+//10 8
+//2 3 20 4 5 1 6 7 8 9
+const int maxn=1e5;
+int a[maxn];
+int main() {
+    int n,p;
+    cin>>n>>p;
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
+    }
+    int res=1;
+    sort(a,a+n);
+    for (int i = 0; i < n; ++i) {
+        int j=upper_bound(a+i+1,a+n,(long long)a[i]*p)-a;
+        res=max(res,j-i);
+    }
+    printf("%d",res);
+    return 0;
+}
+
+
+
+
+
