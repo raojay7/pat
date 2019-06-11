@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+
+using namespace std;
+
+//map判断
+
+int main() {
+    int n,a,num=0;
+    cin>>n;
+    unordered_map<int,int> m;
+    for (int i = 0; i < n; ++i) {
+        cin>>a;
+        m[a]++;
+    }
+    while (++num){
+        if(m[num]==0)break;
+    }
+    cout<<num;
+    return 0;
+}
+
+
