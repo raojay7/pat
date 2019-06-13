@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+#include <cmath>
+using namespace std;
+/*
+实际就是暴力枚举看看从2到一个数的sqrt(num)+1是否能被其整除，如果能说明就是一个子
+因子，然后就可以不断更新子串的长度
+1、如果只有一个因子，那么这个数只能为1或者质数。因此我们主要去计算两个及以上因数的情况。
+2、在有两个及以上的数连乘中，因数的最大上限为sqrt(N) + 1
+3、因此思路就是，不断构造连乘，看连乘的积是否是N的因数，如果是，则看这部分连乘的数的个数是否比已记录的多。
+4、用变量first记录连乘的第一个数字，这里我把它赋初值为0，如果在寻找N的因数过程中，first没有改变，那么就表明N是1或者是一个质数
+ */
+long int num, temp;
+int main() {
+    cin>>num;
+    int first=0,len=0,maxn=sqrt(num)+1;
+    for (int i = 2; i <=maxn; ++i) {
+        int j;
+        temp=1;
+        for (j = i; j <=maxn; ++j) {
+            temp*=j;
+            if(num%temp!=0)break;
+        }
+        if(j-i>len){
+            len=j-i;
+            first=i;
+        }
+    }
+    if(first==0){
+        cout << 1 << endl << num;
+    }
+    else{
+        cout<<len<<endl;
+        for (int i = 0; i < len; ++i) {
+            if(i!=0)cout<<"*";
+            cout<<(first+i);
+        }
+    }
+
+    return 0;
+}
+
+
