@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+
+using namespace std;
+//使用set判断是否查询过，使用ran数组判定得什么奖
+bool isprime(int n){
+    if(n<=1)return false;
+    for (int i = 2; i*i <= n; ++i) {
+        if(n%i==0){
+            return false;
+        }
+    }
+    return true;
+}
+int ran[10000];
+int main() {
+    int n,k;
+    set<int> s;
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        int id;
+        cin>>id;
+        ran[id]=i+1;
+    }
+    cin>>k;
+    for (int i = 0; i < k; ++i) {
+        int id;
+        cin>>id;
+        if(ran[id]==0){
+            printf("%04d: Are you kidding?\n",id);
+            continue;
+        }
+        if(s.find(id)==s.end()){
+            s.insert(id);
+        }else{
+            printf("%04d: Checked\n",id);
+            continue;
+        }
+        if(ran[id]==1){
+            printf("%04d: Mystery Award\n",id);
+        }else if(isprime(ran[id])){
+            printf("%04d: Minion\n",id);
+        }else{
+            printf("%04d: Chocolate\n",id);
+        }
+    }
+    return 0;
+}
+
+
