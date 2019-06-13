@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+
+using namespace std;
+
+bool isOkNum(string s){
+    bool flag= false;//标记只能出现一次.
+    int cnt=0;
+    if(s[0]=='-'){
+        s=s.substr(1);
+        if(s.size()==0){
+            return false;
+        }
+    }
+    for (int i = 0; i < s.size(); ++i) {
+        if(('0'<=s[i]&&s[i]<='9')){
+            if(flag){
+                cnt++;
+            }
+        }else if(s[i]=='.') {
+            if(flag){
+                return false;//再次出现了.
+            }
+            flag=true;
+        } else{
+            return false;
+        }
+
+    }
+    return cnt <= 2;
+}
+int main() {
+
+    int n;
+    cin>>n;
+    int cnt=0;
+    double sum=0;
+    for (int i = 0; i < n; ++i) {
+        string num;
+        cin>>num;
+        if(!isOkNum(num)){
+            printf("ERROR: %s is not a legal number\n",num.c_str());
+        }else{
+            double res=stod(num);
+            if(res<-1000||res>1000){
+                printf("ERROR: %s is not a legal number\n",num.c_str());
+            }else{
+                sum+=res;
+                cnt++;
+            }
+        }
+    }
+    if(cnt == 1) {
+        printf("The average of 1 number is %.2f", sum);
+    }
+    else if(cnt>1){
+        printf("The average of %d numbers is %.2lf\n",cnt,sum/cnt);
+    }else{
+        printf("The average of 0 numbers is Undefined\n");
+    }
+    return 0;
+}
+
+
