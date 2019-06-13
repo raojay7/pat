@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+
+using namespace std;
+/*
+ 3
+caseee1__thiiis_iiisss_a_teeeeeest
+
+ ei
+case1__this_isss_a_teest
+ */
+//map<char, bool>存储出现的键是否坏，set<char>存储输出可能坏的键的时候，
+// 当前字符是否已经被输出过，输出过的键放在set里面.
+//考虑aaabaaaa的情况，如果想要知道是否坏，那么只要把总体的去掉一定没坏的，其他的有可能坏
+bool sureNoBroken[256];//确认没有坏
+int main() {
+    int k,cnt=1;
+    string s;
+    cin>>k>>s;
+    map<char,bool> m;
+    set<char> ss;
+    s=s+"#";//用于方便判断
+    for (int i = 0; i < s.size()-1; ++i) {
+        if(s[i]==s[i+1]){
+            cnt++;
+        }else{
+            //判断是否是坏键
+            if(cnt%k!=0){
+                sureNoBroken[s[i]]=true;
+            }
+            cnt=1;//重设cnt，开启下一个字符
+        }
+    }
+    //确定那些坏了
+    for (int i = 0; i < s.size()-1; ++i) {
+        m[s[i]]= !sureNoBroken[s[i]];
+    }
+    //输出哪些是坏键
+    for (int i = 0; i < s.size()-1; ++i) {
+        if(m[s[i]]&&ss.find(s[i])==ss.end()){
+            printf("%c",s[i]);
+            ss.insert(s[i]);
+        }
+    }
+    printf("\n");
+    //输出正确的序列
+    for (int i = 0; i < s.size()-1; ++i) {
+        printf("%c",s[i]);
+        if(m[s[i]]){
+            i=i+k-1;
+        }
+    }
+    return 0;
+}
+
+
