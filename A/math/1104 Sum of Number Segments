@@ -1,0 +1,25 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+#include <cmath>
+using namespace std;
+//从第一个数字开始会出现 num * i * (n – i + 1)
+int main() {
+    double temp=0,num;
+    int n;
+    cin>>n;
+    for (int i = 1; i <= n; ++i) {
+        cin>>num;
+        temp+=num*i*(n-i+1);
+    }
+    printf("%.2lf",temp);
+    return 0;
+}
+
+
