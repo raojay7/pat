@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+
+using namespace std;
+/*
+196
+196 + 691 = 887
+887 + 788 = 1675
+1675 + 5761 = 7436
+7436 + 6347 = 13783
+13783 + 38731 = 52514
+52514 + 41525 = 94039
+94039 + 93049 = 187088
+187088 + 880781 = 1067869
+1067869 + 9687601 = 10755470
+10755470 + 07455701 = 18211171
+Not found in 10 iterations.
+ 255552 is a palindromic number.
+ */
+//直接使用reverse函数，然后一个add函数进行字符串相加
+string rev(string s){
+    reverse(s.begin(),s.end());
+    return s;
+}
+//字符串相加的算法
+string add(string s1,string s2){
+    string s=s1;
+    int carry=0;
+    for (int i = s1.size()-1; i >= 0 ; --i) {
+        s[i]=(s1[i]-'0'+s2[i]-'0'+carry)%10+'0';
+        carry=(s1[i]-'0'+s2[i]-'0'+carry)/10;
+    }
+    if(carry>0)s="1"+s;
+    return s;
+}
+int main() {
+    string s,sum;
+    cin>>s;
+    if (s == rev(s)) {
+        cout << s << " is a palindromic number.\n";
+        return 0;
+    }
+    for (int i = 0; i < 10; ++i) {
+        sum=add(s,rev(s));
+        cout << s << " + " << rev(s) << " = " << sum << endl;
+        if(sum==rev(sum)){
+            cout << sum << " is a palindromic number.\n";
+            return 0;
+        }
+        s=sum;
+    }
+    cout<<"Not found in 10 iterations.";
+    return 0;
+}
+
+
