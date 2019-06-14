@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <cstdio>
+#include <cmath>
+using namespace std;
+//使用map存是否兼容，然后用set存是否有冲突
+int main(){
+    int n,m,k;
+    cin>>n>>m;
+    unordered_map<int,vector<int> > m1;
+    for (int i = 0; i < n; ++i) {
+        int n1,n2;
+        cin>>n1>>n2;
+        m1[n1].push_back(n2);
+        m1[n2].push_back(n1);
+    }
+
+    while(m--){
+        cin>>k;
+        unordered_set<int> s;
+        int num;
+        for (int i = 0; i < k; ++i) {
+            cin>>num;
+            s.insert(num);
+        }
+        bool flag=false;
+        for(auto a:s){
+            if(m1.find(a)!=m1.end()){
+                for (int i = 0; i < m1[a].size(); ++i) {
+                    if(s.find(m1[a][i])!=s.end()){
+                        //说明存在不兼容
+                        flag=true;
+                    }
+                }
+            }
+        }
+        if(flag){
+            printf("No\n");
+        }else{
+            printf("Yes\n");
+        }
+
+    }
+    return 0;
+}
