@@ -1,0 +1,84 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+#include <algorithm>
+#include <cmath>
+#include <queue>
+#include <climits>
+
+using namespace std;
+
+/*
+ 1.使用结点结构体表示每个窗口，里面有个queue和endtime用于判断是否能够被服务，poptime用于判断哪个队伍先空出来
+ 2.使用vector，time表示每个index的服务时间，以及sorry表示是否能被服务
+ 3.顺序占满n中的m个窗口，同时确定每个的pop和endtime以及对应的结果result，使用window表示对应的窗口
+ 4.开始处理n*m之后的用户，遍历确定要进入的队列（根据poptime找到个最小的），入队更新
+ 5.处理完毕输出
+ */
+struct node{
+    int poptime,endtime;
+    queue<int> q;
+};
+int main() {
+    int n,m,k,q,index=1;
+    scanf("%d%d%d%d", &n, &m, &k, &q);
+    vector<int> time(k+1),result(k+1);
+    for(int i = 1; i <= k; i++) {
+        scanf("%d", &time[i]);
+    }//输入
+
+    vector<node> window(n+1);
+    vector<bool> sorry(k+1, false);
+
+    for (int i = 1; i <= m; ++i) {
+        for (int j = 1; j <= n ; ++j) {
+            if(index<=k){
+                window[j].q.push(time[index]);
+                if(window[j].endtime >= 540){
+                    sorry[index] = true;
+                }
+                window[j].endtime+=time[index];
+                if(i==1){
+                    window[j].poptime=window[j].endtime;
+                }//确定第一个的出队时间
+                result[index]=window[j].endtime;
+                index++;
+            }
+        }
+    }
+
+    while(index<=k){
+        int tmpn=window[1].poptime,tmpwindow=1;
+        for(int i=2;i<=n;i++){
+            if(window[i].poptime<tmpn){
+                tmpn=window[i].poptime;
+                tmpwindow=i;
+            }
+        }//确定最早空出位置的窗口
+
+        window[tmpwindow].q.pop();
+        window[tmpwindow].q.push(time[index]);
+        window[tmpwindow].poptime+=window[tmpwindow].q.front();
+        if(window[tmpwindow].endtime>=540){
+            sorry[index]=true;
+        }//无法服务
+        window[tmpwindow].endtime+=time[index];
+        result[index]=window[tmpwindow].endtime;
+        index++;
+    }
+
+    for (int i = 1; i <= q; ++i) {
+        int query, minute;
+        scanf("%d", &query);
+        minute = result[query];
+        if(sorry[query]) {
+            printf("Sorry\n");
+        } else {
+            printf("%02d:%02d\n",(minute + 480) / 60, (minute + 480) % 60);
+        }
+    }
+    return 0;
+}
+
