@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+//直接截取就可以，并且总保持当前字符串为最短
+int main() {
+    int n;
+    string ans;
+    scanf("%d\n",&n);
+    for(int i=0;i<n;i++){
+        string s;
+        getline(cin,s);
+        int lens=s.size();
+        reverse(s.begin(),s.end());
+        if(i==0){
+            ans=s;
+            continue;
+        }else{
+            int lenans=ans.size();
+            if(lenans>lens)swap(ans,s);
+            int minlen=min(lenans,lens);
+            for(int j=0;j<minlen;j++){
+                if(ans[j]!=s[j]){
+                    ans=ans.substr(0,j);
+                    break;
+                }
+            }
+        }
+    }
+
+    reverse(ans.begin(),ans.end());
+    if(ans.size()==0){
+        ans="nai";
+    }
+    cout<<ans;
+
+    return 0;
+}
