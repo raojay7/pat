@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+/*
+使用map建立索引map<string,set<int>>set放id，而且结果会自排序
+1、对除了id之外的其他信息都建立一个map<string, set>，把相应的id插入对应搜索词的map的集合里面，形成一个信息对应一个集合，集合里面是复合条件的书的id
+
+2、因为对于输入的关键词（可以重复）没有给定关键词的个数，可以使用while(cin >> s)并且判断c = getchar()，c是否等于\n，如果是再退出循环
+
+3、建立query，通过传参的形式可以将不同的map名称统一化，
+先要判断map.find()和m.end()是否相等，如果不等再去遍历整个map，
+输出所有满足条件的id，如果相等就说明不存在这个搜索词对应的id，
+那么就要输出Not Found
+
+4、传参一定要用引用，否则最后一组数据可能会超时
+*/
+map<string,set<int> > title,author,key,pub,year;
+void query(map<string,set<int> > &m,string &str){
+    if(m.find(str)!=m.end()){
+        //找到了
+        for(auto it=m[str].begin();it!=m[str].end();it++){
+            printf("%07d\n",*it);
+        }
+    }else{
+        printf("Not Found\n");
+    }
+}
+int main()
+{
+    int n,m,id,num;//num为查询时候输入的数字
+    string ttitle,tauthor,tkey,tpub,tyear;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d\n",&id);//这里读取要注意
+        getline(cin,ttitle);
+        title[ttitle].insert(id);
+        getline(cin,tauthor);
+        author[tauthor].insert(id);
+        while(cin>>tkey){
+            key[tkey].insert(id);
+            char c=getchar();
+            if(c=='\n')break;
+        }
+        getline(cin,tpub);
+        pub[tpub].insert(id);
+        getline(cin,tyear);
+        year[tyear].insert(id);
+    }
+    scanf("%d",&m);
+    for(int i=0;i<m;i++){
+        scanf("%d: ",&num);
+        string temp;
+        getline(cin,temp);
+        cout<<num<<": "<<temp<<"\n";
+        if(num == 1) query(title, temp);
+        else if(num == 2) query(author, temp);
+        else if(num == 3) query(key, temp);
+        else if(num == 4) query(pub,temp);
+        else if(num ==5) query(year, temp);
+    }
+    return 0;
+}
