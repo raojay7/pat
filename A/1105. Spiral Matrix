@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+#include <set>
+#include <cmath>
+using namespace std;
+
+
+/*
+螺旋矩阵，先排序，然后再分层输入
+ */
+bool cmp(int a,int b){
+    return a>b;
+}
+int main() {
+    int N, m, n, t = 0;
+    scanf("%d", &N);
+    for (n = sqrt((double)N); n >= 1; n--) {
+        if (N % n == 0) {
+            m = N / n;
+            break;
+        }
+    }
+    vector<int> a(N);
+    for (int i = 0; i < N; ++i) {
+        scanf("%d",&a[i]);
+    }
+    sort(a.begin(),a.end(),cmp);
+    vector<vector<int> > b(m,vector<int>(n));//m*n的矩阵
+    int up=0,down=m-1,left=0,right=n-1;
+    int index=0;
+    while(true){
+        for (int j = left; j <=right ; ++j) {
+            b[up][j]=a[index++];
+        }
+        if(++up>down)break;
+        for (int i = up; i <= down ; ++i) {
+            b[i][right]=a[index++];
+        }
+        if(--right<left)break;
+        for (int j = right; j >=left ; --j) {
+            b[down][j]=a[index++];
+        }
+        if(--down<up)break;
+        for (int i = down; i >= up ; --i) {
+            b[i][left]=a[index++];
+        }
+        if(++left>right)break;
+    }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0 ; j < n; j++) {
+            printf("%d", b[i][j]);
+            if (j != n - 1) printf(" ");
+        }
+        printf("\n");
+    }
+    return 0;
+}
