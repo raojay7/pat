@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+#include <set>
+#include <string>
+#include <cstdio>
+using namespace std;
+
+
+/*
+ 建立数组a保存每个数字出现的次数，然后判断输出
+ */
+
+
+int a[1001];
+int main() {
+    int n,m,temp;
+    cin>>n>>m;
+    for (int i = 0; i < n; ++i) {
+        cin>>temp;
+        a[temp]++;
+    }
+    for (int i = 0; i < 1001; ++i) {
+        if(a[i]){
+            a[i]--;
+            if(m>i&&a[m-i]){
+                printf("%d %d",i,m-i);
+                return 0;
+            }
+            a[i]++;
+        }
+    }
+    printf("No Solution");
+    return 0;
+}
